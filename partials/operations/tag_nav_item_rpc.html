@@ -1,0 +1,17 @@
+{% from "../sliced-string.html" import slicedString %}
+
+
+{% macro tagNavItemRpc(rpcName) %}
+
+<a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3"
+    href="#rpc-{{ rpcName }}">
+    <span class="bg-red-dark font-mono font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded"
+        style="height: 21px;font-size: 11px;" title="RPC">
+        RPC
+    </span>
+    <div style="display:inline-block;">
+        {{ slicedString(rpcName, 'padding-top: 2px;') }}
+    </div>
+</a>
+
+{% endmacro %}

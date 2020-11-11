@@ -1,5 +1,6 @@
 {% from "./tag_nav_item_sub.html" import tagNavItemSub %}
 {% from "./tag_nav_item_pub.html" import tagNavItemPub %}
+{% from "./tag_nav_item_rpc.html" import tagNavItemRpc %}
 
 {% if asyncapi.hasTags() %}
   {% for categorytags in asyncapi.tags() %}
@@ -17,11 +18,7 @@
       <div class="children">
         {% for channelName, channel in asyncapi.channels() %}
           {% if channel.publish() and channel.publish().hasTags() and channel.publish() | containTags(categorytags) %}
-            {{ tagNavItemPub(channel, channelName) }}
-          {% endif %}
-
-          {% if channel.subscribe() and channel.subscribe().hasTags() and channel.subscribe() | containTags(categorytags) %}
-            {{ tagNavItemSub(channel, channelName) }}
+            {{ tagNavItemRpc(channelName) }}
           {% endif %}
         {% endfor %}
       </div>

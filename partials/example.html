@@ -1,7 +1,6 @@
 {% macro example(msg, channelName, open=false) %}
 
 <form>
-  <h5 class="examples-uid text-orange mt-4">{{msg.uid()}}</h5>
   {% if msg.payload() %}
     <div class="payload-examples mb-4 {% if open %}is-open{% endif %}">
       <div class="{% if  msg.payload() | isExpandable %}js-prop cursor-pointer {% endif %} flex property">

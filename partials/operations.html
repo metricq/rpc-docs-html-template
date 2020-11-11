@@ -1,17 +1,24 @@
-{% from "./operation.html" import operation %}
+{% from "./rpc.html" import rpcRequest, rpcReply %}
+{% from "./sliced-string.html" import slicedString %}
 
-<a name="operations"></a>
-<h2 class="mb-4 ml-8">Operations</h2>
+<a name="rpcs"></a>
+<h2 class="mb-4 ml-8">RPCs</h2>
 
-{% for channelName, channel in asyncapi.channels() %}
+{% for rpcName, channel in asyncapi.channels() %}
+  <a name="rpc-{{rpcName}}"></a>
+  <h2 class="font-mono ml-8">
+    <span class="bg-red-dark text-white uppercase p-1 rounded" title="RPC">RPC</span>
+    {{ slicedString(rpcName) }}
+  </h2>
   <div class="responsive-container">
-    {% if channel.hasPublish() %}
-      {{ operation(channel.publish(), 'publish', channelName, channel) }}
-    {% endif %}
+    <div class="center-block px-8">
+      <div class="mt-4 mb-4 markdown">{{ channel.description() | markdown2html | safe }}</div>
+    </div>
   </div>
-  <div class="responsive-container">
-    {% if channel.hasSubscribe() %}
-      {{ operation(channel.subscribe(), 'subscribe', channelName, channel) }}
-    {% endif %}
-  </div>
+  {% if channel.hasPublish() %}
+      {{ rpcRequest(rpcName, channel.publish(), channel) }}
+  {% endif %}
+  {% if channel.hasSubscribe() %}
+      {{ rpcReply(rpcName, channel.subscribe(), channel) }}
+  {% endif %}
 {% endfor %}

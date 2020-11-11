@@ -1,0 +1,67 @@
+{% from "./sliced-string.html" import slicedString %}
+{% from "./tags.html" import tags %}
+{% from "./message.html" import message %}
+{% from "./example.html" import example %}
+{% from "./schema-prop.html" import schemaProp %}
+
+{% macro rpcRequest(rpcName, request, channel) %}
+
+<div class="responsive-container">
+  <div class="center-block px-8 pb-4">
+    <h3 class="font-mono text-base">
+        <span class="border border-blue text-blue uppercase p-1 rounded" title="Request">Request</span>
+    </h3>
+
+    {% if request.hasMultipleMessages() %}
+    {% for msg in request.messages() %}
+    {{ message(msg, showIndex=true, index=loop.index, open=false) }}
+    {% endfor %}
+    {% else %}
+    {{ message(request.message(0), showIndex=false, open=true) }}
+    {% endif %}
+  </div>
+  <div class="right-block px-8">
+    <h4 class="text-lg text-white mb-4">Request examples</h4>
+
+    {% if request.hasMultipleMessages() %}
+    {% for msg in request.messages() %}
+    {{ example(msg, rpcName) }}
+    {% endfor %}
+    {% else %}
+    {{ example(request.message(0), rpcName, open=true) }}
+    {% endif %}
+  </div>
+</div>
+
+{% endmacro %}
+
+{% macro rpcReply(rpcName, reply, channel) %}
+
+<div class="responsive-container">
+  <div class="center-block px-8 pb-8">
+    <h3 class="font-mono text-base">
+        <span class="border border-green text-green uppercase p-1 rounded" title="Reply">Reply</span>
+    </h3>
+
+    {% if reply.hasMultipleMessages() %}
+    {% for msg in reply.messages() %}
+    {{ message(msg, showIndex=true, index=loop.index, open=false) }}
+    {% endfor %}
+    {% else %}
+    {{ message(reply.message(0), showIndex=false, open=true) }}
+    {% endif %}
+  </div>
+  <div class="right-block px-8">
+    <h4 class="text-lg text-white mb-4">Reply examples</h4>
+
+    {% if reply.hasMultipleMessages() %}
+    {% for msg in reply.messages() %}
+    {{ example(msg, rpcName) }}
+    {% endfor %}
+    {% else %}
+    {{ example(reply.message(0), rpcName, open=true) }}
+    {% endif %}
+  </div>
+</div>
+
+{% endmacro %}
